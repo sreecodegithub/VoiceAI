@@ -1,0 +1,132 @@
+{% extends 'dashboard/base.html' %}
+{% load mathfilters %}
+{% load static %}
+{% block body %}
+
+
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+
+            <table class="table table-sm table-bordered">
+              <thead class="thead-dark">
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Date</th>
+                  <th scope="col">Time</th>
+                  <th scope="col">From</th>
+                  <th scope="col">To</th>
+                  <th scope="col">Direction</th>
+                  <th scope="col">Duration</th>
+                  <th scope="col">Channel</th>
+                  <th scope="col">Sentiment</th>
+                  <th scope="col">Interaction</th>
+                  <th scope="col">Play</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for cdr in cdr_table %}
+                {% if cdr.callType == "inbound" %}
+                <tr>
+                <td class="table-active">{{forloop.counter}}</td>
+                <td  style="min-width: 150px;">{{cdr.startDate}}</td>
+                <td>{{cdr.startTime}}</td>
+                <td>{{cdr.callFrom}}</td>
+                <td>{{cdr.callTo}}</td>
+                <td td class="table-info">{{cdr.callType}}</td>
+                <td>{{cdr.callDuration}} secs</td>
+                <td>{{cdr.recordingChannel}}</td>
+                
+                {% if cdr.sentiment == "Negative" %}
+                <td class="table-danger">{{cdr.sentiment}}</td>
+                {% elif cdr.sentiment == "Neutral" %}
+                <td class="table-primary">{{cdr.sentiment}}</td>
+                {% elif cdr.sentiment == "Positive" %}
+                <td class="table-success">{{cdr.sentiment}}</td>
+                {% endif %}
+                <td>{{cdr.interactionType}}</td>
+                <td>       
+                    <a href="https://sandbox.dubber.net/accounts/dubberdemo/recordings/{{cdr.recordingID}}">
+                    <img alt="Recording Link" src="{% static "dashboard/images/play.png" %}"
+                      width="25" height="25">
+                    <!-- <img alt="Recording Link" src="static/dashboard/images/play.png"
+                    width=25" height="25"> -->
+                    </a>
+                </td>
+
+            </tr>
+                {% else %}
+               <tr>
+                <td class="table-active">{{forloop.counter}}</td>
+                <td>{{cdr.startDate}}</td>
+                <td>{{cdr.startTime}}</td>
+                <td>{{cdr.callFrom}}</td>
+                <td>{{cdr.callTo}}</td>
+                <td class="table-warning">{{cdr.callType}}</td>
+                <td>{{cdr.callDuration}} secs</td>
+                <!-- <td>{{cdr.callDuration}}</td> -->
+                <td>{{cdr.recordingChannel}}</td>
+                {% if cdr.sentiment == "Negative" %}
+                <td class="table-danger">{{cdr.sentiment}}</td>
+                {% elif cdr.sentiment == "Neutral" %}
+                <td class="table-primary">{{cdr.sentiment}}</td>
+                {% elif cdr.sentiment == "Positive" %}
+                <td class="table-success">{{cdr.sentiment}}</td>
+                {% endif %}
+                <td>{{cdr.interactionType}}</td>
+                <td>       
+                    <a href="https://sandbox.dubber.net/accounts/dubberdemo/recordings/{{cdr.recordingID}}">
+                      <img alt="Recording Link" src="{% static "dashboard/images/play.png" %}"
+                      width="25" height="25">
+                    </a>
+                </td>
+                </tr>
+                {% endif %}
+                {% endfor %}
+              </tbody>
+              </table>
+          
+
+ 
+</div>
+</div>
+</div>
+
+
+
+
+<!-- On rows -->
+<tr class="table-active">...</tr>
+
+<tr class="table-primary">...</tr>
+<tr class="table-secondary">...</tr>
+<tr class="table-success">...</tr>
+<tr class="table-danger">...</tr>
+<tr class="table-warning">...</tr>
+<tr class="table-info">...</tr>
+<tr class="table-light">...</tr>
+<tr class="table-dark">...</tr>
+
+<!-- On cells (`td` or `th`) -->
+<tr>
+  <td class="table-active">...</td>
+  
+  <td class="table-primary">...</td>
+  <td class="table-secondary">...</td>
+  <td class="table-success">...</td>
+  <td class="table-danger">...</td>
+  <td class="table-warning">...</td>
+  <td class="table-info">...</td>
+  <td class="table-light">...</td>
+  <td class="table-dark">...</td>
+</tr>
+
+
+
+
+
+
+
+{% endblock %}

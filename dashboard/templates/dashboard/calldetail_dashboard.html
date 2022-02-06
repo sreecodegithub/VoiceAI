@@ -1,0 +1,176 @@
+{% extends 'dashboard/base.html' %}
+ 
+{% block body %}
+
+<br>
+<br>
+
+<div class="container">
+    <div class="row">
+      <div class="col-md-3 displayNone" id='col1'>
+        <div class="info-box bg-success">
+          <span class="info-box-icon"><i class="fas fa-info"></i></span>
+
+          <div class="info-box-content">
+            <span class="info-box-text">Total Calls</span>
+            <span class="info-box-number">{{cdrCount}}</span>
+            <br>
+    
+          <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+      </div>
+    </div>
+    <div class="col-md-3 displayNone" id='col2'>
+      <div class="info-box bg-success">
+        <span class="info-box-icon"><i class="fas fa-phone-volume"></i></span>
+
+        <div class="info-box-content">
+          <span class="info-box-text"># Inbound Calls</span>
+          <span class="info-box-number">{{cdrIBCallCount}}</span>
+          <br>
+  
+        <!-- /.info-box-content -->
+      </div>
+      <!-- /.info-box -->
+    </div>
+  </div>
+    <div class="col-md-3 displayNone" id='col3'>
+      <div class="info-box bg-success">
+        <span class="info-box-icon"><i class="fas fa-phone-alt"></i></span>
+
+        <div class="info-box-content">
+          <span class="info-box-text"># Outbound Calls</span>
+          <span class="info-box-number">{{cdrOBCallCount}}</span>
+
+          <br>
+        <!-- /.info-box-content -->
+      </div>
+      <!-- /.info-box -->
+    </div>
+  </div>
+
+  <div class="col-md-3 displayNone" id='col4'>
+    <div class="info-box bg-success">
+      <span class="info-box-icon"><i class="fas fa-mobile-alt"></i></span>
+
+      <div class="info-box-content">
+        <span class="info-box-text"># Meeting Calls</span>
+        <span class="info-box-number">{{cdrMeetingCallCount}}</span>
+        <br>
+
+      <!-- /.info-box-content -->
+    </div>
+    <!-- /.info-box -->
+  </div>
+</div>
+
+
+</div>
+<br>
+<div class="container">
+<div class="row">
+ 
+  <div class="col-md-3 displayNone" id='col5'>
+    <div class="info-box bg-success">
+      <span class="info-box-icon"><i class="fas fa-history"></i></span>
+
+      <div class="info-box-content">
+        <span class="info-box-text">Total Call Duration</span>
+        <span class="info-box-number">{{cdrTotalDuration}}</span>
+        <br>
+
+      <!-- /.info-box-content -->
+    </div>
+    <!-- /.info-box -->
+  </div>
+</div>
+<div class="col-md-3 displayNone" id='col6'>
+  <div class="info-box bg-success">
+    <span class="info-box-icon"><i class="fas fa-hourglass-end"></i></span>
+
+    <div class="info-box-content">
+      <span class="info-box-text">Average Call Duration</span>
+      <span class="info-box-number">{{cdrAvgDuration}}</span>
+      <br>
+
+    <!-- /.info-box-content -->
+  </div>
+  <!-- /.info-box -->
+</div>
+</div>
+<div class="col-md-3 displayNone" id='col7'>
+  <div class="info-box bg-success">
+    <span class="info-box-icon"><i class="fas fa-volume-up"></i></span>
+
+    <div class="info-box-content">
+      <span class="info-box-text">Maximum Call Duration</span>
+      <span class="info-box-number">{{cdrMaxDuration}}</span>
+      <br>
+
+
+    <!-- /.info-box-content -->
+  </div>
+  <!-- /.info-box -->
+</div>
+</div>
+
+<div class="col-md-3 displayNone" id='col8'>
+<div class="info-box bg-success">
+  <span class="info-box-icon"><i class="fas fa-volume-down"></i></span>
+
+  <div class="info-box-content">
+    <span class="info-box-text">Minimum Call Duration</span>
+    <span class="info-box-number">{{cdrMinDuration}}</span>
+    <br>
+
+  <!-- /.info-box-content -->
+</div>
+<!-- /.info-box -->
+</div>
+</div>
+<br>
+<br>
+  <div id="container" style="width: 65%;">
+    <div class="row">
+      <br>
+<br>
+    <canvas id="bar-chart"></canvas>
+
+  </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+  <script>
+
+    var config = {
+      type: 'bar',
+      data: {
+        datasets: [{
+          data: {{ data|safe }},
+          backgroundColor: [
+            'blue', 'orange', 'grey',
+          ],
+          label: 'Calls'
+        }],
+        labels: {{ labels|safe }}
+      },
+      options: {
+        responsive: true
+      }
+    };
+
+    window.onload = function() {
+      var ctx = document.getElementById('bar-chart').getContext('2d');
+      window.myPie = new Chart(ctx, config);
+    };
+
+  </script>
+
+ 
+
+  </div>
+</div>
+</div>
+</div>
+{% endblock %}

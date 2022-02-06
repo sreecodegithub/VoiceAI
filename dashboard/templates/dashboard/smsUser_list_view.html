@@ -1,0 +1,66 @@
+{% extends 'dashboard/base.html' %}
+{% load mathfilters %}
+{% load static %}
+{% block body %}
+
+
+{% if smsUserTable.count > 0 %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+
+          <table class="table table-striped table-bordered">
+              <thead class="thead-dark">
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">User</th>
+                  <th scope="col">SMS Number</th>
+                  <th scope="col">Active</th>
+                  <th scope="col">Update</th>
+                  <th scope="col">Delete</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for record in smsUserTable %}
+                <tr>
+                    <td class="table-active">{{forloop.counter}}</td>
+                    <td>{{record.user}}</td>
+                    <td>{{record.smsNumber}}</td>
+                    <td>{{record.active}}</td>
+                    <td>
+                        <a href="{% url 'smsUser_update_view' record.id %}">Update</a>
+                    </td>
+                    <td>
+                      <a href="{% url 'smsUser_delete_view' record.id %}">Delete</a>
+                  </td>
+                </tr>
+          
+                {% endfor %}
+              </tbody>
+              </table>
+          
+
+ 
+</div>
+</div>
+</div>
+{% endif %}
+
+<div class="container">
+    <div class="row justify-content-end">
+        <div class="col-md-3">
+   
+          <button type="submit" class="btn btn-block btn-primary" onclick="location.href='{% url 'smsUser_create_view' %}'" >Add User</button>
+        </div>
+    </div>
+</div>
+
+ 
+
+
+
+
+
+
+
+{% endblock %}

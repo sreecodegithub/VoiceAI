@@ -1,0 +1,67 @@
+
+{% extends 'dashboard/base.html' %}
+{% load static %}
+{% block body %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+
+            <table class="table table-dark table-borderless">
+              <thead class="thead-dark">
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">First Name</th>
+                  <th scope="col">Last Name</th>
+                  <th scope="col">User Name</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for user in users %}
+               <tr>
+                   <td>{{forloop.counter}}</td>
+                   <td>{{user.first_name}}</td>
+                   <td>{{user.last_name}}</td>
+                   <td>{{user.username}}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+              </table>
+              {% if users.has_other_pages %}
+
+ 
+</div>
+</div>
+</div>
+
+<div class="container">
+  <div class="row">
+      <div class="col-md-12">
+        <nav aria-label="...">
+        <ul class="pagination">
+          {% if users.has_previous %}
+            <li class="page-link"><a href="?page={{ users.previous_page_number }}">Previous</a></li>
+          {% else %}
+            <li class="page-item disabled"><span class="page-link">Previous</span></li>
+          {% endif %}
+          {% for i in users.paginator.page_range %}
+            {% if users.number == i %}
+              <li class="page-item active"><span class="page-link">{{ i }} <span class="sr-only">(current)</span></span></li>
+            {% else %}
+              <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+            {% endif %}
+          {% endfor %}
+          {% if users.has_next %}
+            <li class="page-item"><a class="page-link" href="?page={{ users.next_page_number }}">Next</a></li>
+          {% else %}
+            <li class="page-item disabled"><span class="page-link">Next</span></li>
+          {% endif %}
+        </ul>
+      </nav>
+      </div>
+    </div>
+    </div>
+
+
+{% endif %}
+{% endblock %}

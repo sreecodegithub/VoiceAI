@@ -1,0 +1,50 @@
+
+{% extends 'dashboard/base.html' %}
+{% load static %}
+{% block body %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+
+            <form method="POST" action="{% url 'data_export_csv' %}">
+                {% csrf_token %}
+                <div class="form-group">
+                <label>Enter From Date:
+                  <input type="date" class="form-control" name="from_date" required pattern="\d{4}-\d{2}-\d{2}">
+                  <span class="validity"></span>
+                </label>
+            </div>
+            <div class="form-group">
+                <label>Enter To Date:
+                    <input type="date" class="form-control"  name="to_date" required pattern="\d{4}-\d{2}-\d{2}">
+                    <span class="validity" ></span>
+                  </label>
+                <p>
+                </div>
+                  <button class="btn btn-primary">Submit</button>
+                </p>
+              </form>
+ 
+              
+</div>
+</div>
+</div>
+
+<div class="container">
+  <div class="row">
+      <div class="col-md-12">
+        <h1>{{error_msg}}</h1>
+      </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+      <div class="col-md-12">
+        <h1>{{report_status}}</h1>
+      </div>
+  </div>
+</div>
+  
+{% endblock %}

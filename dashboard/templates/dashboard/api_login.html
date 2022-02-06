@@ -1,0 +1,56 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>API Login</title>
+</head>
+<body>
+    <div class="container">
+
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="#">Login</a>
+          </nav>
+          <br>
+
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                  
+                    <form method="POST" action="{% url 'api_login' %}">
+                        {% csrf_token %}
+                        <div class="form-group">
+                          <label">Region</label>
+                          <input type="text" class="form-control" id="region" name ="region" placeholder="Enter region", required> 
+                        </div>
+                        <div class="form-group">
+                            <label">Account ID</label>
+                            <input type="text" class="form-control" id="account_id" name ="account_id" placeholder="Account ID", required> 
+                          </div>
+                        <div class="form-group">
+                            <label">Auth ID</label>
+                            <input type="text" class="form-control" id="auth_id" name="auth_id" placeholder="Enter Auth ID" , required> 
+                        </div>
+                        <div class="form-group">
+                            <label">Auth Secret</label>
+                            <input type="text" class="form-control" id="auth_secret" name="auth_secret" placeholder="Enter Auth Secret" , required> 
+                        </div>
+                        <div class="form-group">
+                            <label">Client ID</label>
+                            <input type="text" class="form-control" id="client_id" name="client_id" placeholder="Enter Client ID" , required> 
+                        </div>
+                        <div class="form-group">
+                            <label">Client Secret</label>
+                            <input type="text" class="form-control" id="client_secret" name="client_secret" placeholder="Enter Client Secret" , required> 
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                      </form>
+            </div>
+    
+          </div>
+         
+    </div>
+</body>
+</html>

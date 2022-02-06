@@ -1,0 +1,146 @@
+{% extends 'dashboard/base.html' %}
+ 
+{% block body %}
+
+<br>
+<br>
+
+<div class="container">
+    <div class="row">
+      <div class="col displayNone" id="col1">        
+        <div class="card text-white text-center bg-dark mb-3" style="max-width: 18rem;">
+            <div class="card-header"># DUB Points</div>
+            <div class="card-body">
+              <h1 class="card-text">{{DUB_TotalDUBPoints}}</h1>
+            </div>
+          </div>
+      </div>
+      <div class="col displayNone" id="col2">     
+        <div class="card text-white text-center  bg-dark mb-3" style="max-width: 18rem;">
+            <div class="card-header"># Active DUB Points</div>
+            <div class="card-body">
+              <h1 class="card-text">{{DUB_ActiveDUBPoints}}</h1>
+            </div>
+          </div>
+      </div>
+      <div class="col displayNone" id="col3">     
+        <div class="card text-white text-center  bg-dark mb-3" style="max-width: 18rem;">
+            <div class="card-header"># Suspended DUB Points</div>
+            <div class="card-body"> 
+              <h1 class="card-text">{{DUB_SuspendedDUBPoints}}</h1>
+            </div>
+          </div>
+      </div>
+      <div class="col displayNone" id="col4">     
+        <div class="card text-white text-center  bg-dark mb-3" style="max-width: 18rem;">
+            <div class="card-header"># Recorder DUB Points</div>
+            <div class="card-body"> 
+              <h1 class="card-text">{{DUB_RecorderDUBPoints}}</h1>
+            </div>
+          </div>
+      </div>
+    </div>
+</div>
+<br>
+<br>
+<div class="container">
+<div class="row">
+  <div class="col displayNone" id="col5">     
+      <div class="card text-white text-center  bg-dark mb-3" style="max-width: 18rem;">
+          <div class="card-header"># API DUB Points</div>
+          <div class="card-body"> 
+            <h1 class="card-text">{{DUB_APIDUBPoints}}</h1>
+          </div>
+        </div>
+    </div>
+    <div class="col displayNone" id="col6">     
+      <div class="card text-white text-center  bg-dark mb-3" style="max-width: 18rem;">
+          <div class="card-header"># Meeting DUB Points</div>
+          <div class="card-body"> 
+            <h1 class="card-text">{{DUB_MeetingDUBPoints}}</h1>
+          </div>
+        </div>
+    </div>
+    <div class="col displayNone" id="col7">     
+      <div class="card text-white text-center  bg-dark mb-3" style="max-width: 18rem;">
+          <div class="card-header"># AI DUB Points</div>
+          <div class="card-body">
+            <h1 class="card-text">{{DUB_AIDUBPoints}}</h1>
+          </div>
+        </div>
+    </div>
+    <div class="col displayNone" id="col8">     
+      <div class="card text-white text-center  bg-dark mb-3" style="max-width: 18rem;">
+          <div class="card-header"># Non-AI DUB Points</div>
+          <div class="card-body">
+            <h1 class="card-text">{{DUB_NonAIDUBPoints}}</h1>
+          </div>
+        </div>
+    </div>
+  </div>
+</div>
+
+<div class="container" style="width: 35%;">
+  <div class="row">
+    <div class="col" >
+    <canvas id="pie-chart"></canvas>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+    <script>
+  
+      var config = {
+        type: 'pie',
+        data: {
+          datasets: [{
+            data: {{ data|safe }},
+            backgroundColor: [
+              'blue', 'orange',
+            ],
+            label: 'DUB Points'
+          }],
+          labels: {{ labels|safe }}
+        },
+        options: {
+          responsive: true
+        }
+      };
+  
+  
+    </script>
+    </div>
+    <div class="col" >
+    <canvas id="pie-chart1"></canvas>
+
+    <script>
+  
+      var config1 = {
+        type: 'pie',
+        data: {
+          datasets: [{
+            data: {{ LicenseTypedata|safe }},
+            backgroundColor: [
+              'blue', 'orange','grey'
+            ],
+            label: 'Type'
+          }],
+          labels: {{ LicenseTypelabels|safe }}
+        },
+        options: {
+          responsive: true
+        }
+      };
+  
+      window.onload = function() {
+        var ctx = document.getElementById('pie-chart').getContext('2d');
+        window.myPie = new Chart(ctx, config);
+        var ctx1 = document.getElementById('pie-chart1').getContext('2d');
+        window.myPie1 = new Chart(ctx1, config1);
+      };
+  
+    </script>
+  </div>
+    </div>
+    </div>
+</div>
+</div>
+{% endblock %}

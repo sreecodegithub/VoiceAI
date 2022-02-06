@@ -1,0 +1,17 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+{% block body %}
+<h1>SMS Message sent successfully.</h1>
+<h2>SMS Content: {{smsContent}}</h2>
+
+<div class="container">
+    <div class="row justify-content-end">
+        <div class="col-md-3">
+   
+          <button type="submit" class="btn btn-block btn-primary" onclick="location.href='{% url 'calldetailrecord' %}'" >Go back to Call Detail Table</button>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+

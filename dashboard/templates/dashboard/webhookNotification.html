@@ -1,0 +1,49 @@
+
+{% extends 'dashboard/base.html' %}
+{% load static %}
+{% block body %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-3 col-sm-6 col-12">
+                <div class="info-box bg-danger">
+                  <span class="info-box-icon"><i class="fas fa-comments"></i></span>
+    
+                  <div class="info-box-content">
+                    <span class="info-box-text">Match Keyword Notification</span>
+                    <span class="info-box-number">Symptom</span>
+    
+                    <div class="progress">
+                      <div class="progress-bar" style="width: 70%"></div>
+                    </div>
+                    <span class="progress-description">
+
+
+                        dubbercallrecordingtable = DubberCallRecording(recordingID=recording_id,callFrom=call_from,callTo=call_to,callType=call_type,startDate=call_start_date,startTime=call_start_time,callDuration=call_duration,recordingChannel=recording_channel,held=recording_held,interactionType= recording_type,dubPointID=recording_dubpointid,transcription=recording_transcription,sentiment=sentiment_text,createdDate=datetime.datetime.now(),anger=nAnger,confident=nConfident,fear=nFear,sadness=nSadness,joy=nJoy,analytical=nAnalytical,tentative=nTentative)
+
+                      {{call_type}} | {{recording_channel}} | {{call_start_time}}
+                    </span>
+                  </div>
+                  <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+              </div>
+
+              <div class="col-md-3 col-sm-6 col-12">
+                <div class="info-box shadow">
+                  <span class="info-box-icon bg-warning"><i class="far fa-copy"></i></span>
+    
+                  <div class="info-box-content">
+                    <span class="info-box-text">Transcription</span>
+                    <span class="info-box-number">{{recording_transcription}}</span>
+                  </div>
+                  <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+              </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

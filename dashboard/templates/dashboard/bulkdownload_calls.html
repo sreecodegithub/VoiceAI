@@ -1,0 +1,69 @@
+
+{% extends 'dashboard/base.html' %}
+{% load static %}
+{% block body %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+
+            <form method="POST" action="{% url 'bulkdownload_calls' %}">
+                {% csrf_token %}
+                <div class="form-group">
+                  <label>Enter Folder path:
+                    <input type="text" class="form-control" name="folder_path">
+                    <span class="validity"></span>
+                  </label>
+              </div>
+
+                <div class="form-group">
+                <label>Enter From Date:
+                  <input type="date" class="form-control" name="from_date" required pattern="\d{4}-\d{2}-\d{2}">
+                  <span class="validity"></span>
+                </label>
+            </div>
+            <div class="form-group">
+                <label>Enter To Date:
+                    <input type="date" class="form-control"  name="to_date" required pattern="\d{4}-\d{2}-\d{2}">
+                    <span class="validity" ></span>
+                  </label>
+                <p>
+                </div>
+                  <button class="btn btn-primary" id="submit_btn">Submit</button>
+                </p>
+              </form>   
+</div>
+</div>
+</div>
+<div class="container">
+  <div class="row">
+      <div class="col-md-12">
+        <h1 id="progress_msg"></h1>
+      </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+      <div class="col-md-12">
+        <h1 id="error">{{error_msg}}</h1>
+      </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+      <div class="col-md-12">
+        <h1>{{report_status}}</h1>
+      </div>
+  </div>
+</div>
+
+<script>
+  $(document).ready (function(){
+    $("#submit_btn").click(function(){
+      $("#error").text("")
+    })
+  })
+</script>
+  
+{% endblock %}

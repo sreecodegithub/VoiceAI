@@ -1,0 +1,29 @@
+
+{% extends 'dashboard/base.html' %}
+{% load static %}
+{% block body %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+
+            <table class="table table-striped table-bordered">
+   
+                <tr>
+                    <td>Access token</td>
+                    <td>{{access_token}}</td>
+                </tr>
+                <tr>
+                    <td>Token expiry</td>
+                    <td>{{token_expiry}}</td>
+                </tr>
+                <tr>
+                    <td>Refresh token</td>
+                    <td>{{refresh_token}}</td>
+                </tr>
+              </table>
+ 
+</div>
+</div>
+</div>
+{% endblock %}

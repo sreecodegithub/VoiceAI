@@ -1,0 +1,7 @@
+{% extends 'dashboard/base.html' %}
+{% block body %}
+<h1>Download CSV</h1>
+<a href={{export_url}}>Click to download CSV</a>
+{% csrf_token %}
+
+{% endblock %}

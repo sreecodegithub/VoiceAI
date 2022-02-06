@@ -1,0 +1,7 @@
+{% extends 'dashboard/base.html' %}
+{% block body %}
+<h1>{{record_count}} files have been downloaded.</h1>
+<a href={{folder_path}} target="_blank">Click to View Folder</a>
+{% csrf_token %}
+
+{% endblock %}
