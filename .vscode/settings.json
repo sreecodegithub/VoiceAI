@@ -1,4 +1,4 @@
 {
     "python.pythonPath": "C:\\Code\\voiceai\\venv\\Scripts\\python.exe",
-    "python.analysis.extraPaths": ["vonage", "C:\\Code\\voiceai\\venv\\Lib\\site-packages\\twilio"]
+    "python.analysis.extraPaths": ["twilio", "C:\\Code\\voiceai\\venv\\Lib\\site-packages\\twilio"],
 }

@@ -1,3 +1,4 @@
+from dataclasses import replace
 import json
 import os
 from subprocess import CREATE_DEFAULT_ERROR_MODE
@@ -110,7 +111,7 @@ def getRecordingURL(request,recordingID):
     apiDB = DubberAPIToken.objects.all().first()
     region = apiDB.region
     access_token=apiDB.accessToken
-    payload ={'listener': 'sreekanth.sreevalsam+sandbox@dubber.net'}
+    payload ={'listener': ''}
     response = requests.get("https://api.dubber.net/"+region+"/v1/recordings/"+str(recordingID), headers={"Authorization":"Bearer "+access_token},params= payload)
     return response  
 
@@ -365,12 +366,17 @@ def bulkdownload_calls(request):
         recordingID=""
         for record in dubberfiles:
             recordingID = record.recordingID
+            recording_date = record.startDate.strftime("%m/%d/%Y").replace('/','_')
+            recording_time=record.startTime.replace(':','_')
+            extension = record.recordingChannel
+            customFileName=str(recording_date)+"_"+recording_time+"_"+extension+"_"+str(recordingID)
+            
             time.sleep(2)
             #getmp3file
             response = getRecordingURL(request,recordingID)
             recording_url = response.json()['recording_url']
             r = requests.get(recording_url, stream=True)
-            abs_filename = folder_path+"\\"+ str(recordingID) +".mp3"
+            abs_filename = folder_path+"\\"+ str(customFileName) +".mp3"
             if r.ok:
                 print("saving to", os.path.abspath(folder_path))
                 with open(abs_filename, 'wb') as f:
@@ -382,7 +388,7 @@ def bulkdownload_calls(request):
             else:  # HTTP status code 4XX/5XX
                 print("Download failed: status code {}\n{}".format(r.status_code, r.text))
             #getmetadata
-            metadatafile = folder_path+"\\"+ str(recordingID)+".dat"
+            metadatafile = folder_path+"\\"+ str(customFileName)+".dat"
             with open(metadatafile, 'w') as outfile:
                 json.dump(response.json(), outfile, indent=4)
 
@@ -391,7 +397,7 @@ def bulkdownload_calls(request):
                 time.sleep(2)
                 response =  getRecordingAIInfo(request,recordingID)
                 ai_jsondata = response.json()
-                aifile = folder_path+"\\"+ str(recordingID)+".ai"
+                aifile = folder_path+"\\"+ str(customFileName)+".ai"
                 with open(aifile, 'w') as outfile:
                     json.dump(ai_jsondata, outfile, indent=4)
             except:
@@ -561,8 +567,8 @@ def showWebhookNotification(request,resourceURL):
 
 
 def SendSMS(request,id):
-    account_sid = 'ACe02568f11a558f3cc9e5a4e75e6849ad' 
-    auth_token = '5d3ddcbb95246b4b07c34ed80b5e71a6' 
+    account_sid = ''#twilio api
+    auth_token = '' #twilio api
     client = Client(account_sid, auth_token) 
     cdrDB = DubberCallRecording.objects.get(recordingID=id)
     cdrDate = cdrDB.startDate.strftime("%m/%d/%Y")
@@ -577,7 +583,7 @@ def SendSMS(request,id):
         if(rec.active == True):
             try:
                 message = client.messages.create(  
-                                    messaging_service_sid='MG11345f6284cdb1bcce13ab391f7c214e', 
+                                    messaging_service_sid='', #twilio api
                                     body=smsContent,      
                                     to=rec.smsNumber,
                                 ) 
@@ -636,61 +642,7 @@ def PerformanceDashboard(request):
     data.append(cdrMeetingCallCount)
     
     return render(request,'dashboard/calldetail_dashboard.html',{'page_name':'Performance Dashboard','cdrCount':cdrCount,'cdrIBCallCount':cdrIBCallCount,'cdrOBCallCount':cdrOBCallCount,'cdrMeetingCallCount':cdrMeetingCallCount,'cdrTotalDuration':cdrTotalDuration,'cdrAvgDuration':cdrAvgDuration,'cdrMaxDuration':cdrMaxDuration,'cdrMinDuration':cdrMinDuration, 'labels': labels, 'data': data,})
-
-
-# def pie_chart(request):
-#     labels = []
-#     data = []
-
-
-#     qs_positive =  DubberCallRecording.objects.filter(sentiment='Positive')
-#     qs_negative =  DubberCallRecording.objects.filter(sentiment='Negative')
-#     qs_neutral =  DubberCallRecording.objects.filter(sentiment='Neutral')
-
-#     positiveCallcount = qs_positive.count()
-#     negativeCallcount =qs_negative.count()
-#     neutralCallcount =qs_neutral.count()
-
-#     labels.append("Positive")
-#     data.append(positiveCallcount)
-
-#     labels.append("Negative")
-#     data.append(negativeCallcount)
-
-#     labels.append("Neutral")
-#     data.append(neutralCallcount)
-    
-#     return render(request, 'dashboard/pie_chart.html', {
-#         'labels': labels,
-#         'data': data,
-#     })
-
-
-# def time_series_chart(request):
-# #     from django.db.models import DateField, Sum
-# # from django.db.models.functions import Cast
-
-# # query = Order.objects.filter(
-# #     restaurant=some_restaurant
-# # ).annotate(
-# #     create_date=Cast('created', DateField())
-# # ).values('create_date').annotate(
-# #     id_count=Count('id')
-# # ).order_by('create_date')
-#     query = DubberCallRecording.objects.annotate(date=Cast('startDate',DateField())).values('startDate').annotate(count=Count('recordingID')).order_by('-startDate')
-#     labels =[]
-#     data =[]
-#     for record in query:
-#         labels= record['startDate']
-#         data = record['count']
-#     print(labels)
-#     print(data)
-#     labels = ["hello","world"]
-#     data =["2","5"]
-#     return render(request, 'dashboard/pie_chart.html', {
-#         'labels': labels,
-#         'data': data,
-#     })
+ 
 
 
 
